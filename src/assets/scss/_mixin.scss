@@ -1,0 +1,39 @@
+// flex內容置中
+@mixin flex_center {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+//提交按鈕
+@mixin btn {
+  background-color: #ffce33;
+  width: 160px;
+  height: 40px;
+}
+
+//發票總張數與消費金額
+@mixin headerTotal {
+  color: #51519b;
+}
+
+//公司名稱
+@mixin componyTitle {
+  color: #999999;
+}
+
+//驗證中
+@mixin verify {
+  background-color: #ff5c5c;
+  color: #ffffff;
+}
+//電子跟載具
+@mixin carrier {
+  background-color: #ffce33;
+}
+
+@mixin invoice_tags {
+  width: 36px;
+  height: 16px;
+  border-radius: 8;
+}
