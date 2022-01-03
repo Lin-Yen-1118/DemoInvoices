@@ -2,7 +2,7 @@
 @mixin flex_center {
   display: flex;
   justify-content: center;
-  align-content: center;
+  align-items: center;
 }
 
 //提交按鈕
@@ -27,13 +27,28 @@
   background-color: #ff5c5c;
   color: #ffffff;
 }
+
 //電子跟載具
-@mixin carrier {
+//header背景顏色
+@mixin bg {
   background-color: #ffce33;
 }
 
+//內容背景顏色
+@mixin main_bgc {
+  background-color: #ffffff;
+}
+
+//載具狀態
 @mixin invoice_tags {
-  width: 36px;
+  width: 100%;
+  // min-width: 36px;
   height: 16px;
-  border-radius: 8;
+  border-radius: 8px;
+}
+
+//區塊的border
+@mixin border_line {
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
 }

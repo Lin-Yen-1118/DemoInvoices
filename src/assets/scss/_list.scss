@@ -1,0 +1,42 @@
+.list {
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: 60px;
+
+  @include border_line;
+  @include main_bgc;
+}
+.list_data {
+  @include flex_center;
+  flex-direction: column;
+  padding: 5px;
+}
+//區塊靠左對齊
+.item_bargainor {
+  align-items: flex-start;
+}
+.tags {
+  @include flex_center;
+  @include invoice_tags;
+  @include bg;
+  h4 {
+    padding: 2px;
+  }
+}
+
+//賣方名稱
+.bargainor {
+  color: #999999;
+  h4 {
+    margin-top: 3px;
+  }
+}
+
+.list {
+  .price {
+    position: absolute;
+    right: 0%;
+    height: 100%;
+  }
+}

@@ -1,16 +1,19 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js App" />
+  <Header />
+  <Month />
+  <List />
+  <TabBar />
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import Header from "@/components/Header.vue";
+import Month from "@/components/Month.vue";
+import List from "@/components/List.vue";
+import TabBar from "@/components/TabBar.vue";
 
 export default {
   name: "App",
-  components: {
-    HelloWorld,
-  },
+  components: { Header, Month, List, TabBar },
 };
 </script>
 

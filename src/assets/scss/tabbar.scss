@@ -1,0 +1,15 @@
+.tab_container {
+  @include main_bgc;
+  display: flex;
+  height: 59px;
+  position: fixed;
+  left: 0%;
+  bottom: 0%;
+  width: 100%;
+}
+.tab_item {
+  width: 100%;
+  @include flex_center;
+  @include main_bgc;
+  border: none;
+}
