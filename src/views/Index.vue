@@ -10,6 +10,8 @@
       <h2>共{{ Number_of_invoices }}張，總金額{{ totalPrice }}元</h2>
     </div>
   </div>
+
+  <List />
   <div class="tab_container">
     <div class="tab_item">
       <router-link to="/index"> </router-link>
@@ -21,12 +23,12 @@
       <button @click="jump" type="button" id="manual_input">手動輸入</button>
     </div>
   </div>
-  <router-view></router-view>
 </template>
 <script>
+import List from "@/components/List.vue";
 export default {
   name: "Index",
-  components: {},
+  components: { List },
   data() {
     return {
       title: "110年12月",

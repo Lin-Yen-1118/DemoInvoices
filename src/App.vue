@@ -1,21 +1,10 @@
 <template>
-  <nav>
-    <!-- <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link> -->
-    <Index />
-    <router-view />
-    <List />
-  </nav>
+  <router-view> </router-view>
 </template>
 
 <script>
-import Index from "@/views/Index.vue";
-
-import List from "@/components/List.vue";
-
 export default {
   name: "App",
-  components: { Index, List },
 };
 </script>
 
