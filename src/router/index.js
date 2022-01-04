@@ -19,9 +19,7 @@ const routes = [
     meta: {
       title: '手動輸入'
     },
-
   },
-
 ]
 
 const router = createRouter({
