@@ -19,7 +19,7 @@
 }
 
 //公司名稱
-@mixin componyTitle {
+@mixin gray {
   color: #999999;
 }
 
@@ -43,9 +43,10 @@
 //載具狀態
 @mixin invoice_tags {
   width: 100%;
-  // min-width: 36px;
+  max-width: 40px;
   height: 16px;
   border-radius: 8px;
+  @include flex_center;
 }
 
 //區塊的border

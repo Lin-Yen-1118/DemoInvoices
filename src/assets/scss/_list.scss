@@ -17,11 +17,11 @@
   align-items: flex-start;
 }
 .tags {
-  @include flex_center;
   @include invoice_tags;
   @include bg;
   h4 {
     padding: 2px;
+    margin: auto;
   }
 }
 
@@ -38,5 +38,18 @@
     position: absolute;
     right: 0%;
     height: 100%;
+  }
+}
+
+.list {
+  button {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
   }
 }

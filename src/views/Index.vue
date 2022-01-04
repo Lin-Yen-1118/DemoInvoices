@@ -25,7 +25,7 @@
   </div>
 </template>
 <script>
-import List from "@/components/List.vue";
+import List from "@/views/List.vue";
 export default {
   name: "Index",
   components: { List },

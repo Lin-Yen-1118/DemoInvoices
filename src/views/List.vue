@@ -1,5 +1,7 @@
 <template>
   <div class="list">
+    <Listitems v-show="isShow" v-model:close="isShow" />
+    <button type="button" @click="toggleInputForm"></button>
     <div class="list_data">
       <div class="date">12/29</div>
       <div class="tags"><h4>驗證中</h4></div>
@@ -14,8 +16,19 @@
   </div>
 </template>
 <script>
+import Listitems from "@/components/ListComponent/Listitems.vue";
 export default {
   name: "List",
-  components: {},
+  components: { Listitems },
+  data() {
+    return {
+      isShow: false,
+    };
+  },
+  methods: {
+    toggleInputForm() {
+      this.isShow = !this.isShow;
+    },
+  },
 };
 </script>

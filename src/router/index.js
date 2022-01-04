@@ -20,6 +20,7 @@ const routes = [
       title: '手動輸入'
     },
   },
+
 ]
 
 const router = createRouter({
