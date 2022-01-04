@@ -1,19 +1,21 @@
 <template>
-  <Header />
-  <Month />
-  <List />
-  <TabBar />
+  <nav>
+    <!-- <router-link to="/">Home</router-link> |
+    <router-link to="/about">About</router-link> -->
+    <Index />
+    <router-view />
+    <List />
+  </nav>
 </template>
 
 <script>
-import Header from "@/components/Header.vue";
-import Month from "@/components/Month.vue";
+import Index from "@/views/Index.vue";
+
 import List from "@/components/List.vue";
-import TabBar from "@/components/TabBar.vue";
 
 export default {
   name: "App",
-  components: { Header, Month, List, TabBar },
+  components: { Index, List },
 };
 </script>
 
