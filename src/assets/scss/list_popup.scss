@@ -12,21 +12,27 @@
   .invoices {
     @include flex_center;
     flex-direction: column;
-
-    width: 60%;
+    width: 100%;
     height: 100%;
     margin: auto;
   }
+  // close
   .close {
     width: 100%;
     display: flex;
     justify-content: flex-end;
+    position: absolute;
+    top: -8%;
+    right: 0%;
+    padding-right: 10px;
   }
   .content {
     background-color: #fff;
     margin-top: 5%;
+    max-width: 340px;
     width: 100%;
     height: 80%;
+    max-height: 500px;
     padding: 10px;
     border-radius: 20px;
   }
@@ -62,5 +68,60 @@
     .bargainor {
       color: #5a5a78;
     }
+  }
+}
+//資料內容
+.content {
+  ul {
+    display: flex;
+    padding: 0px;
+    height: 30px;
+  }
+  li {
+    list-style-type: none;
+    width: 100%;
+    @include flex_center;
+    padding: 5px;
+  }
+  .invoices_item {
+    width: 100%;
+    font-size: 12px;
+  }
+  .data_title {
+    color: #999999;
+    background-color: #f2f2f2;
+  }
+  .data_item_name {
+    width: 50%;
+    justify-content: flex-start;
+  }
+  .data_n {
+    width: 16.6666667%;
+  }
+  .data_body {
+    color: #999999;
+  }
+}
+
+.content {
+  position: relative;
+  .total_price {
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    vertical-align: middle;
+    position: absolute;
+    left: 0%;
+    bottom: 0%;
+    width: 100%;
+    z-index: 1;
+    border-top: 1px solid #e0e0e0;
+    padding: 10px;
+    color: #999999;
+    font-size: 12px;
+    text-align: center;
+  }
+  .total_amount {
+    @include flex_center;
   }
 }
