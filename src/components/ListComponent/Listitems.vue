@@ -2,7 +2,7 @@
   <div class="listpopup">
     <div class="invoices">
       <div class="content">
-        <div class="close" @click="closeAdoptForm">
+        <div class="close" @click="closeInvitePopup">
           <img id="close_icon" src="@/assets/img/close.png" />
         </div>
 
@@ -53,7 +53,12 @@ export default {
   data() {
     return {};
   },
-  methods: {},
+  methods: {
+    // 關閉彈窗
+    closeInvitePopup() {
+      this.$emit("update:close", false);
+    },
+  },
   mounted() {},
 };
 </script>
