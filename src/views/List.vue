@@ -10,7 +10,7 @@
           ).getDate()}`
         }}
       </div>
-      <div class="tags">
+      <div :class="invoice.status === '驗證中' ? 'tags-verify' : 'tags'">
         <h4>{{ invoice.status }}</h4>
       </div>
     </div>
