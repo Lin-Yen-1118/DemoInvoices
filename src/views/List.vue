@@ -10,20 +10,40 @@
           ).getDate()}`
         }}
       </div>
+
+      <!-- 如果type是0，就是顯示載具 -->
+      <!-- 如果type是1，會有兩種顯示: 驗證中、電子 -->
       <div :class="invoice.status === '驗證中' ? 'tags-verify' : 'tags'">
-        <h4>{{ invoice.status }}</h4>
+        <h4 v-if="invoice.type === 0">
+          {{ (invoice.status = "載具") }}
+        </h4>
+        <h4 v-if="invoice.type === 1 && invoice.status != '驗證中'">
+          {{ (invoice.status = "電子") }}
+        </h4>
+        <h4 v-if="invoice.type === 1 && invoice.status === '驗證中'">
+          {{ (invoice.status = "驗證中") }}
+        </h4>
       </div>
     </div>
     <div class="list_data item_bargainor">
-      <div class="item_name">
-        <h2>{{ invoice.invNum }}</h2>
+      {{ invoices.item }}
+
+      <div
+        class="item_name"
+        v-for="(details, index) of invoice.details"
+        :key="index"
+      >
+        <h2 v-if="index === 0">{{ details.description }}</h2>
       </div>
       <div class="bargainor">
         <h4>{{ invoice.sellerName }}</h4>
       </div>
     </div>
     <div class="list_data price">
-      <div>{{ invoice.amount }}元</div>
+      <div v-if="invoice.status != '驗證中'" v-show="invoice.amount">
+        {{ invoice.amount }}元
+      </div>
+      <div v-else-if="(invoice.status = '驗證中')">{{ "--" }}元</div>
     </div>
   </div>
 </template>
@@ -49,6 +69,7 @@ export default {
     async getinvoicesList() {
       await axios
         .get(`http://localhost:3000/invoices`)
+
         .then((res) => {
           const invoices = res.data;
           this.invoices = invoices;
