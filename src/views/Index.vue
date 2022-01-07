@@ -7,11 +7,11 @@
       <h1>{{ title }}</h1>
     </div>
     <div class="total">
-      <h2>共{{ Number_of_invoices }}張，總金額{{ totalPrice }}元</h2>
+      <h2>共{{ totalUnits }}張，總金額{{ totalPrice }}元</h2>
     </div>
   </div>
 
-  <List />
+  <List @updateTotalAmount="getTotalPrice" @updateTotalUnits="getTotalUnits" />
   <div class="tab_container">
     <div class="tab_item">
       <router-link to="/index"> </router-link>
@@ -32,13 +32,19 @@ export default {
   data() {
     return {
       title: "110年12月",
-      Number_of_invoices: "0",
-      totalPrice: "000,000",
+      totalUnits: 0,
+      totalPrice: 0,
     };
   },
   methods: {
     jump() {
       this.$router.push({ path: "/input" });
+    },
+    getTotalUnits(newUnits) {
+      this.totalUnits = newUnits;
+    },
+    getTotalPrice(newAmount) {
+      this.totalPrice = newAmount;
     },
   },
   mounted() {},

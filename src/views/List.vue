@@ -15,13 +15,13 @@
       <!-- 如果type是1，會有兩種顯示: 驗證中、電子 -->
       <div :class="invoice.status === '驗證中' ? 'tags-verify' : 'tags'">
         <h4 v-if="invoice.type === 0">
-          {{ (invoice.status = "載具") }}
+          {{ "載具" }}
         </h4>
         <h4 v-if="invoice.type === 1 && invoice.status != '驗證中'">
-          {{ (invoice.status = "電子") }}
+          {{ "電子" }}
         </h4>
         <h4 v-if="invoice.type === 1 && invoice.status === '驗證中'">
-          {{ (invoice.status = "驗證中") }}
+          {{ "驗證中" }}
         </h4>
       </div>
     </div>
@@ -53,6 +53,17 @@ import Listitems from "@/components/ListComponent/Listitems.vue";
 export default {
   name: "List",
   components: { Listitems },
+  emits: {
+    // No validation
+    click: null,
+    // Validate submit event
+    updateTotalUnits: (length) => {
+      return length;
+    },
+    updateTotalAmount: (sum) => {
+      return sum;
+    },
+  },
   data() {
     return {
       isShow: false,
@@ -69,14 +80,36 @@ export default {
     async getinvoicesList() {
       await axios
         .get(`http://localhost:3000/invoices`)
-
         .then((res) => {
           const invoices = res.data;
           this.invoices = invoices;
+          this.updateTotalUnits();
+          this.updateTotalAmount();
+          this.invoices = this.sortByDate(this.invoices, "time");
         })
         .catch((err) => {
           console.log(err);
         });
+    },
+    sortByDate(arr, key) {
+      const sortedArr = arr.sort(function (a, b) {
+        return new Date(a[key]) - new Date(b[key]);
+      });
+      return sortedArr;
+    },
+    updateTotalUnits() {
+      const length = this.invoices.length;
+      this.$emit("updateTotalUnits", length);
+    },
+    updateTotalAmount() {
+      const invoices = this.invoices;
+      let sum = 0;
+      invoices.map((item) => {
+        if (item.amount) {
+          sum = sum + item.amount;
+        }
+      });
+      this.$emit("updateTotalAmount", sum);
     },
   },
 };
