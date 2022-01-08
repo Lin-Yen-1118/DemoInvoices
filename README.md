@@ -27,7 +27,7 @@ npm run lint
 ### Launch json-server :3000
 
 ```
- json-server db.json
+json-server db.json
 ```
 
 ### Customize configuration
