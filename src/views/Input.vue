@@ -162,7 +162,15 @@ export default {
       if (this.validatMoment() && this.validatInvnum()) {
         this.getinvoicesList();
         sessionStorage.setItem("maxID", this.invoiceData.id);
+        this.resetInput();
       }
+    },
+    resetInput() {
+      this.invoiceCode = "";
+      this.invoiceNum = "";
+      this.year = "";
+      this.month = "";
+      this.date = "";
     },
   },
   computed: {

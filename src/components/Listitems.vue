@@ -2,7 +2,7 @@
   <div class="listpopup">
     <div class="invoices">
       <div class="content">
-        <div class="close" @click="closeInvitePopup">
+        <div class="close cursor-pointer" @click="closeInvitePopup">
           <img id="close_icon" src="@/assets/img/close.png" />
         </div>
         <div class="listpopup_data">
@@ -61,15 +61,31 @@
             {{ invoice.amount ? invoice.amount : "--" }}
           </div>
         </div>
+        <button
+          @click="deleteItem(invoice.id)"
+          v-if="invoice.status === '驗證中'"
+          class="transparentBg cursor-pointer"
+        >
+          <img src="@/assets/img/delete.png" />
+        </button>
       </div>
     </div>
   </div>
 </template>
 <script>
+import axios from "axios";
 import * as moment from "moment";
 export default {
   name: "Listitems",
   components: {},
+  emits: {
+    // No validation
+    click: null,
+    // Validate submit event
+    deleteIndex: (length) => {
+      return length;
+    },
+  },
   data() {
     return {};
   },
@@ -89,6 +105,10 @@ export default {
         };
       },
     },
+    index: {
+      type: Number,
+      default: 0,
+    },
   },
   methods: {
     // 關閉彈窗
@@ -102,6 +122,18 @@ export default {
       }
       return this.invoice.time;
     },
+    async deleteItem(id) {
+      await axios
+        .delete(`http://localhost:3000/invoices/${id}`)
+        .then((res) => {
+          console.log(res);
+          this.closeInvitePopup();
+          this.$emit("deleteIndex", this.index);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
   mounted() {},
 };
@@ -109,5 +141,12 @@ export default {
 <style lang="scss" scoped>
 .info-align {
   text-align: center;
+}
+.transparentBg {
+  position: absolute;
+  bottom: -40px;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0);
+  border: 0;
 }
 </style>

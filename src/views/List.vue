@@ -1,7 +1,13 @@
 <template>
-  <Listitems v-show="isShow" v-model:close="isShow" :invoice="invoiceFocusOn" />
+  <Listitems
+    v-show="isShow"
+    v-model:close="isShow"
+    :invoice="invoiceFocusOn"
+    :index="invoiceFocusOn.index"
+    @deleteIndex="deleteIndex"
+  />
   <div class="list" v-for="(invoice, index) of invoices" :key="index">
-    <button type="button" @click="toggleInputForm(invoice)"></button>
+    <button type="button" @click="toggleInputForm(invoice, index)"></button>
     <div class="list_data">
       <div class="date">
         {{ formatTime(invoice.time) }}
@@ -71,8 +77,9 @@ export default {
     this.getinvoicesList();
   },
   methods: {
-    toggleInputForm(invoice) {
+    toggleInputForm(invoice, index) {
       this.invoiceFocusOn = invoice;
+      this.invoiceFocusOn.index = index;
       this.isShow = !this.isShow;
     },
     async getinvoicesList() {
@@ -87,6 +94,7 @@ export default {
           this.sortByDate(this.invoices, "time");
           const copy = JSON.parse(JSON.stringify(this.invoices));
           const maxID = this.sortByNum(copy, "id")[0].id;
+
           sessionStorage.setItem("maxID", maxID);
         })
         .catch((err) => {
@@ -118,6 +126,9 @@ export default {
         }
       });
       this.$emit("updateTotalAmount", sum);
+    },
+    deleteIndex(index) {
+      this.invoices.splice(index, 1);
     },
     formatTime(time) {
       const date = new Date(time).getDate().toString();

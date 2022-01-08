@@ -27,6 +27,7 @@
     padding-right: 10px;
   }
   .content {
+    position: relative;
     background-color: #fff;
     margin-top: 5%;
     max-width: 340px;
@@ -86,6 +87,8 @@
   .invoices_item {
     width: 100%;
     font-size: 12px;
+    height: 350px;
+    overflow-y: auto;
   }
   .data_title {
     color: #999999;
