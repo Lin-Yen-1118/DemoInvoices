@@ -1,14 +1,10 @@
 <template>
+  <Listitems v-show="isShow" v-model:close="isShow" :invoice="invoiceFocusOn" />
   <div class="list" v-for="(invoice, index) of invoices" :key="index">
-    <Listitems v-show="isShow" v-model:close="isShow" />
-    <button type="button" @click="toggleInputForm"></button>
+    <button type="button" @click="toggleInputForm(invoice)"></button>
     <div class="list_data">
       <div class="date">
-        {{
-          `${new Date(invoice.time).getMonth() + 1}/${new Date(
-            invoice.time
-          ).getDate()}`
-        }}
+        {{ formatTime(invoice.time) }}
       </div>
 
       <!-- 如果type是0，就是顯示載具 -->
@@ -43,13 +39,13 @@
       <div v-if="invoice.status != '驗證中'" v-show="invoice.amount">
         {{ invoice.amount }}元
       </div>
-      <div v-else-if="(invoice.status = '驗證中')">{{ "--" }}元</div>
+      <div v-else>{{ "--" }}元</div>
     </div>
   </div>
 </template>
 <script>
 import axios from "axios";
-import Listitems from "@/components/ListComponent/Listitems.vue";
+import Listitems from "@/components/Listitems.vue";
 export default {
   name: "List",
   components: { Listitems },
@@ -68,13 +64,15 @@ export default {
     return {
       isShow: false,
       invoices: [],
+      invoiceFocusOn: {},
     };
   },
   mounted() {
     this.getinvoicesList();
   },
   methods: {
-    toggleInputForm() {
+    toggleInputForm(invoice) {
+      this.invoiceFocusOn = invoice;
       this.isShow = !this.isShow;
     },
     async getinvoicesList() {
@@ -120,6 +118,12 @@ export default {
         }
       });
       this.$emit("updateTotalAmount", sum);
+    },
+    formatTime(time) {
+      const date = new Date(time).getDate().toString();
+      const month = (new Date(time).getMonth() + 1).toString();
+      const newV = `${month.padStart(2, "0")}/${date.padStart(2, "0")}`;
+      return newV;
     },
   },
 };

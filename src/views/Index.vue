@@ -14,7 +14,6 @@
   <List @updateTotalAmount="getTotalPrice" @updateTotalUnits="getTotalUnits" />
   <div class="tab_container">
     <div class="tab_item">
-      <router-link to="/index"> </router-link>
       <button type="button" id="scan">掃描輸入</button>
     </div>
 
