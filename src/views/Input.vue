@@ -13,10 +13,22 @@
           <span class="input_box input_text">發票號碼:</span>
           <div class="input_box">
             <div class="input_box_input">
-              <input placeholder="大寫英文" />
+              {{ invoiceCode }}
+              <input
+                placeholder="大寫英文"
+                maxlength="2"
+                v-model="invoiceCode"
+                @input="validateInvoiceCode"
+              />
             </div>
             <div class="input_box_input">
-              <input placeholder="8碼發票號碼" />
+              {{ invoiceNum }}
+              <input
+                maxlength="8"
+                placeholder="8碼發票號碼"
+                v-model="invoiceNum"
+                @input="validatInvoiceNum"
+              />
             </div>
           </div>
         </div>
@@ -24,11 +36,29 @@
           <span class="input_box input_text">開立時間:</span>
           <div class="input_box">
             <div class="input_box_input">
-              <input placeholder="西元年" />
+              {{ year }}
+              <input
+                maxlength="4"
+                placeholder="西元年"
+                v-model="year"
+                @input="validatYear"
+              />
             </div>
             <div class="input_box_input">
-              <input placeholder="月份" />
-              <input placeholder="日期" />
+              {{ month }}
+              <input
+                maxlength="2"
+                placeholder="月份"
+                v-model="month"
+                @input="validatMonth"
+              />
+              {{ date }}
+              <input
+                maxlength="2"
+                placeholder="日期"
+                v-model="date"
+                @input="validatDate"
+              />
             </div>
           </div>
         </div>
@@ -41,5 +71,45 @@
 export default {
   name: "Input",
   components: {},
+  data() {
+    return {
+      invoiceCode: "",
+      invoiceNum: "",
+      year: "",
+      month: "",
+      date: "",
+    };
+  },
+  methods: {
+    validateInvoiceCode() {
+      this.invoiceCode = this.invoiceCode.toUpperCase();
+      const regex = /^[A-Z]{1,2}$/g;
+      const pass = regex.test(this.invoiceCode);
+      if (!pass) {
+        this.invoiceCode = "";
+      }
+    },
+    validatInvoiceNum() {
+      this.invoiceCode = "";
+      console.log("validatInvoiceNum");
+    },
+    validatYear() {
+      this.invoiceCode = "";
+      console.log("validatYear");
+    },
+    validatMonth() {
+      this.invoiceCode = "";
+      console.log("validatMonth");
+    },
+    validatDate() {
+      this.invoiceCode = "";
+      console.log("validatDate");
+    },
+  },
+  computed: {
+    nowYear() {
+      return new Date().getFullYear();
+    },
+  },
 };
 </script>
