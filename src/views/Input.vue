@@ -13,7 +13,6 @@
           <span class="input_box input_text">發票號碼:</span>
           <div class="input_box">
             <div class="input_box_input">
-              {{ invoiceCode }}
               <input
                 placeholder="大寫英文"
                 maxlength="2"
@@ -22,7 +21,6 @@
               />
             </div>
             <div class="input_box_input">
-              {{ invoiceNum }}
               <input
                 maxlength="8"
                 placeholder="8碼發票號碼"
@@ -36,7 +34,6 @@
           <span class="input_box input_text">開立時間:</span>
           <div class="input_box">
             <div class="input_box_input">
-              {{ year }}
               <input
                 maxlength="4"
                 placeholder="西元年"
@@ -45,14 +42,13 @@
               />
             </div>
             <div class="input_box_input">
-              {{ month }}
               <input
                 maxlength="2"
                 placeholder="月份"
                 v-model="month"
                 @input="validatMonth"
               />
-              {{ date }}
+
               <input
                 maxlength="2"
                 placeholder="日期"
@@ -68,6 +64,7 @@
   </div>
 </template>
 <script>
+import * as moment from "moment";
 export default {
   name: "Input",
   components: {},
@@ -81,6 +78,8 @@ export default {
     };
   },
   methods: {
+    //英文字母兩碼
+    //輸入小寫字母可轉成大寫字母
     validateInvoiceCode() {
       this.invoiceCode = this.invoiceCode.toUpperCase();
       const regex = /^[A-Z]{1,2}$/g;
@@ -89,26 +88,51 @@ export default {
         this.invoiceCode = "";
       }
     },
+    //發票數字八碼
     validatInvoiceNum() {
-      this.invoiceCode = "";
-      console.log("validatInvoiceNum");
+      const regex = /^[0-9]{1,8}$/g;
+      const pass = regex.test(this.invoiceNum);
+      if (!pass) {
+        this.invoiceNum = "";
+      }
     },
+    //西元年
     validatYear() {
-      this.invoiceCode = "";
-      console.log("validatYear");
+      const regex = /^[0-9]{1,4}$/g;
+      const pass = regex.test(this.year);
+      if (!pass) {
+        this.year = "";
+      }
+      this.validatMoment();
     },
+    //月份
     validatMonth() {
-      this.invoiceCode = "";
-      console.log("validatMonth");
+      //驗證數字
+      const regex = /^[0-9]{1,2}$/g;
+      const pass = regex.test(this.month);
+      if (!pass) {
+        this.month = "";
+      }
+      this.validatMoment();
     },
+    //日期
     validatDate() {
-      this.invoiceCode = "";
-      console.log("validatDate");
+      //驗證數字
+      const regex = /^[0-9]{1,2}$/g;
+      const pass = regex.test(this.date);
+      if (!pass) {
+        this.date = "";
+      }
+      this.validatMoment();
     },
-  },
-  computed: {
-    nowYear() {
-      return new Date().getFullYear();
+    validatMoment() {
+      let result = moment(
+        `${this.month}/${this.date}/${this.year}`,
+        "MM/DD/YYYY",
+        true
+      ).isValid();
+      console.log(result);
+      return result;
     },
   },
 };
