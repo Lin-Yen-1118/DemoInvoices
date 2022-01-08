@@ -47,6 +47,7 @@
                 placeholder="月份"
                 v-model="month"
                 @input="validatMonth"
+                @blur="padStart($event, 'month')"
               />
 
               <input
@@ -54,17 +55,19 @@
                 placeholder="日期"
                 v-model="date"
                 @input="validatDate"
+                @blur="padStart($event, 'date')"
               />
             </div>
           </div>
         </div>
       </div>
-      <button type="submit">提交</button>
+      <button type="submit" @click="submit">提交</button>
     </div>
   </div>
 </template>
 <script>
 import * as moment from "moment";
+import axios from "axios";
 export default {
   name: "Input",
   components: {},
@@ -131,8 +134,48 @@ export default {
         "MM/DD/YYYY",
         true
       ).isValid();
-      console.log(result);
       return result;
+    },
+    validatInvnum() {
+      const regex = /^[A-Z]{2}[-]?[0-9]{8}$/g;
+      const result = regex.test(this.invoiceData.invNum);
+      return result;
+    },
+    padStart(e, key) {
+      const oldV = e.target.value;
+      const newV = oldV.padStart(2, "0");
+      this[key] = newV;
+    },
+    async getinvoicesList() {
+      await axios
+        .post(`http://localhost:3000/invoices`, this.invoiceData)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    submit() {
+      console.log("validatMoment:" + this.validatMoment());
+      console.log("validatInvnum:" + this.validatInvnum());
+      if (this.validatMoment() && this.validatInvnum()) {
+        this.getinvoicesList();
+        sessionStorage.setItem("maxID", this.invoiceData.id);
+      }
+    },
+  },
+  computed: {
+    invoiceData() {
+      let maxID = JSON.parse(sessionStorage.getItem("maxID"));
+      const newMaxID = (maxID += 1);
+      return {
+        id: newMaxID,
+        invNum: `${this.invoiceCode}${this.invoiceNum}`,
+        status: "驗證中",
+        time: `${this.year}-${this.month}-${this.date} 00:00:00`,
+        type: 1,
+      };
     },
   },
 };

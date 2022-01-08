@@ -81,11 +81,15 @@ export default {
       await axios
         .get(`http://localhost:3000/invoices`)
         .then((res) => {
+          console.log(res);
           const invoices = res.data;
           this.invoices = invoices;
           this.updateTotalUnits();
           this.updateTotalAmount();
-          this.invoices = this.sortByDate(this.invoices, "time");
+          this.sortByDate(this.invoices, "time");
+          const copy = JSON.parse(JSON.stringify(this.invoices));
+          const maxID = this.sortByNum(copy, "id")[0].id;
+          sessionStorage.setItem("maxID", maxID);
         })
         .catch((err) => {
           console.log(err);
@@ -94,6 +98,12 @@ export default {
     sortByDate(arr, key) {
       const sortedArr = arr.sort(function (a, b) {
         return new Date(a[key]) - new Date(b[key]);
+      });
+      return sortedArr;
+    },
+    sortByNum(arr, key) {
+      const sortedArr = arr.sort(function (a, b) {
+        return b[key] - a[key];
       });
       return sortedArr;
     },
