@@ -16,6 +16,7 @@
 .item_bargainor {
   align-items: flex-start;
 }
+
 .tags {
   @include invoice_tags;
   @include bg;

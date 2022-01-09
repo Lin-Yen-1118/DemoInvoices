@@ -1,10 +1,10 @@
 <template>
   <div class="input">
     <div class="input_header">
-      <span class="arrow">
-        <router-link to="/"> </router-link>
+      <router-link class="arrow" to="/">
         <img src="../assets/img/arrow.png" />
-      </span>
+      </router-link>
+
       <h2>手動輸入發票</h2>
     </div>
     <div class="input_contain">
@@ -18,7 +18,11 @@
                 maxlength="2"
                 v-model="invoiceCode"
                 @input="validateInvoiceCode"
+                :class="invCodeIsValid ? '' : 'input_warning'"
               />
+              <div class="input_tip" v-if="!invCodeIsValid">
+                請輸入正確的發票代碼
+              </div>
             </div>
             <div class="input_box_input">
               <input
@@ -26,7 +30,11 @@
                 placeholder="8碼發票號碼"
                 v-model="invoiceNum"
                 @input="validatInvoiceNum"
+                :class="invNumIsValid ? '' : 'input_warning'"
               />
+              <div class="input_tip" v-if="!invNumIsValid">
+                請輸入正確的發票號碼
+              </div>
             </div>
           </div>
         </div>
@@ -39,6 +47,7 @@
                 placeholder="西元年"
                 v-model="year"
                 @input="validatYear"
+                :class="validatMoment() || year === '' ? '' : 'input_warning'"
               />
             </div>
             <div class="input_box_input">
@@ -48,6 +57,7 @@
                 v-model="month"
                 @input="validatMonth"
                 @blur="padStart($event, 'month')"
+                :class="validatMoment() || month === '' ? '' : 'input_warning'"
               />
 
               <input
@@ -56,12 +66,21 @@
                 v-model="date"
                 @input="validatDate"
                 @blur="padStart($event, 'date')"
+                :class="validatMoment() || date === '' ? '' : 'input_warning'"
               />
             </div>
           </div>
+          <div
+            class="input_tip_date"
+            v-if="
+              !validatMoment() && !(year === '' && month === '' && date === '')
+            "
+          >
+            請輸入正確的日期
+          </div>
         </div>
       </div>
-      <button type="submit" @click="submit">提交</button>
+      <button class="cursor-pointer" type="submit" @click="submit">提交</button>
     </div>
   </div>
 </template>
@@ -92,7 +111,7 @@ export default {
         this.invoiceCode = "";
       }
     },
-    //驗證 發票數字八碼
+    //驗證 發票號碼八碼數字
     validatInvoiceNum() {
       const regex = /^[0-9]{1,8}$/g;
       const pass = regex.test(this.invoiceNum);
@@ -111,7 +130,6 @@ export default {
     },
     //驗證 月份
     validatMonth() {
-      //驗證數字
       const regex = /^[0-9]{1,2}$/g;
       const pass = regex.test(this.month);
       if (!pass) {
@@ -121,7 +139,6 @@ export default {
     },
     //驗證 日期
     validatDate() {
-      //驗證數字
       const regex = /^[0-9]{1,2}$/g;
       const pass = regex.test(this.date);
       if (!pass) {
@@ -139,9 +156,9 @@ export default {
       ).isValid();
       return result;
     },
-    //正規表達式
+    //驗證完整發票號碼
     validatInvnum() {
-      const regex = /^[A-Z]{2}[-]?[0-9]{8}$/g;
+      const regex = /^[A-Z]{2}?[0-9]{8}$/g;
       const result = regex.test(this.invoiceData.invNum);
       return result;
     },
@@ -160,6 +177,7 @@ export default {
           console.log(err);
         });
     },
+
     submit() {
       console.log("validatMoment:" + this.validatMoment());
       console.log("validatInvnum:" + this.validatInvnum());
@@ -190,80 +208,20 @@ export default {
         type: 1,
       };
     },
+    invCodeIsValid() {
+      const regex = /^[A-Z]{2}$/g;
+      const result = regex.test(this.invoiceCode);
+      return result || this.invoiceCode === "";
+    },
+    invNumIsValid() {
+      const regex = /^[0-9]{8}$/g;
+      const result = regex.test(this.invoiceNum);
+      return result || this.invoiceNum === "";
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.input {
-  background-color: #fff;
-  height: 100vh;
-}
-.input_header {
-  @include bg;
-  @include flex_center;
-  position: relative;
-  height: 45px;
-}
-
-//返回主頁面
-.arrow {
-  @include flex_center;
-  position: absolute;
-  left: 0px;
-  width: 5%;
-  height: 100%;
-  a {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-  }
-  img {
-    position: relative;
-    left: 0px;
-    width: 6px;
-    height: 9px;
-  }
-}
-.input_contain {
-  @include flex_center;
-  flex-direction: column;
-  width: 100%;
-  padding: 20px 0px 0px;
-  @include pad {
-    padding: 20px 10px 0px 10px;
-  }
-  .input_items {
-    @include flex_center;
-    justify-content: flex-start;
-    flex-direction: column;
-    padding-bottom: 10px;
-    .input_text {
-      padding-bottom: 10px;
-    }
-    .input_box {
-      display: flex;
-      width: 100%;
-      .input_box_input {
-        display: flex;
-        width: 100%;
-      }
-    }
-  }
-}
-input {
-  width: 100%;
-  margin-right: 5px;
-  height: 36px;
-  border: 1px solid #e0e0e0;
-  color: #9191a0;
-  text-align: center;
-  font-size: 12px;
-}
-.input_contain {
-  button {
-    @include btn;
-    margin-top: 60px;
-  }
-}
+@import "../assets/scss/input.scss";
 </style>

@@ -7,7 +7,11 @@
     @deleteIndex="deleteIndex"
   />
   <div class="list" v-for="(invoice, index) of invoices" :key="index">
-    <button type="button" @click="toggleInputForm(invoice, index)"></button>
+    <button
+      class="cursor-pointer"
+      type="button"
+      @click="toggleInputForm(invoice, index)"
+    ></button>
     <div class="list_data">
       <div class="date">
         {{ formatTime(invoice.time) }}
@@ -94,7 +98,6 @@ export default {
           this.sortByDate(this.invoices, "time");
           const copy = JSON.parse(JSON.stringify(this.invoices));
           const maxID = this.sortByNum(copy, "id")[0].id;
-
           sessionStorage.setItem("maxID", maxID);
         })
         .catch((err) => {
@@ -103,7 +106,7 @@ export default {
     },
     sortByDate(arr, key) {
       const sortedArr = arr.sort(function (a, b) {
-        return new Date(a[key]) - new Date(b[key]);
+        return new Date(b[key]) - new Date(a[key]);
       });
       return sortedArr;
     },
@@ -139,3 +142,6 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+@import "../assets/scss/list.scss";
+</style>

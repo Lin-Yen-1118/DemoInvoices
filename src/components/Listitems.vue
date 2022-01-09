@@ -49,9 +49,9 @@
             <li class="data_n">{{ item.unitPrice }}</li>
             <li class="data_n">{{ item.amount }}</li>
           </ul>
-          <div v-if="!invoice.details" class="info-align">
-            <p>- 沒有明細資料 -</p>
-            <p>此張發票可能正在等待店家更新或驗證。</p>
+          <div v-if="!invoice.details" class="info-align gray">
+            <div>- 沒有明細資料 -</div>
+            <div>此張發票可能正在等待店家更新或驗證。</div>
           </div>
         </div>
         <!-- 總金額 -->
