@@ -66,7 +66,7 @@
           v-if="invoice.status === '驗證中'"
           class="transparentBg cursor-pointer"
         >
-          <img src="@/assets/img/delete.png" />
+          <img src="@/assets/img/Delete.svg" />
         </button>
       </div>
     </div>
@@ -139,14 +139,5 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.info-align {
-  text-align: center;
-}
-.transparentBg {
-  position: absolute;
-  bottom: -40px;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0);
-  border: 0;
-}
+@import "@/assets/scss/list_popup.scss";
 </style>

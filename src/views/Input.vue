@@ -83,6 +83,7 @@ export default {
   methods: {
     //英文字母兩碼
     //輸入小寫字母可轉成大寫字母
+    //輸入內容不符合時，無法輸入
     validateInvoiceCode() {
       this.invoiceCode = this.invoiceCode.toUpperCase();
       const regex = /^[A-Z]{1,2}$/g;
@@ -91,7 +92,7 @@ export default {
         this.invoiceCode = "";
       }
     },
-    //發票數字八碼
+    //驗證 發票數字八碼
     validatInvoiceNum() {
       const regex = /^[0-9]{1,8}$/g;
       const pass = regex.test(this.invoiceNum);
@@ -99,7 +100,7 @@ export default {
         this.invoiceNum = "";
       }
     },
-    //西元年
+    //驗證 西元年
     validatYear() {
       const regex = /^[0-9]{1,4}$/g;
       const pass = regex.test(this.year);
@@ -108,7 +109,7 @@ export default {
       }
       this.validatMoment();
     },
-    //月份
+    //驗證 月份
     validatMonth() {
       //驗證數字
       const regex = /^[0-9]{1,2}$/g;
@@ -118,7 +119,7 @@ export default {
       }
       this.validatMoment();
     },
-    //日期
+    //驗證 日期
     validatDate() {
       //驗證數字
       const regex = /^[0-9]{1,2}$/g;
@@ -128,6 +129,8 @@ export default {
       }
       this.validatMoment();
     },
+
+    //驗證 輸入的 西元年/月/日 是否為有效
     validatMoment() {
       let result = moment(
         `${this.month}/${this.date}/${this.year}`,
@@ -136,6 +139,7 @@ export default {
       ).isValid();
       return result;
     },
+    //正規表達式
     validatInvnum() {
       const regex = /^[A-Z]{2}[-]?[0-9]{8}$/g;
       const result = regex.test(this.invoiceData.invNum);
@@ -173,6 +177,7 @@ export default {
       this.date = "";
     },
   },
+
   computed: {
     invoiceData() {
       let maxID = JSON.parse(sessionStorage.getItem("maxID"));
@@ -188,3 +193,77 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.input {
+  background-color: #fff;
+  height: 100vh;
+}
+.input_header {
+  @include bg;
+  @include flex_center;
+  position: relative;
+  height: 45px;
+}
+
+//返回主頁面
+.arrow {
+  @include flex_center;
+  position: absolute;
+  left: 0px;
+  width: 5%;
+  height: 100%;
+  a {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+  img {
+    position: relative;
+    left: 0px;
+    width: 6px;
+    height: 9px;
+  }
+}
+.input_contain {
+  @include flex_center;
+  flex-direction: column;
+  width: 100%;
+  padding: 20px 0px 0px;
+  @include pad {
+    padding: 20px 10px 0px 10px;
+  }
+  .input_items {
+    @include flex_center;
+    justify-content: flex-start;
+    flex-direction: column;
+    padding-bottom: 10px;
+    .input_text {
+      padding-bottom: 10px;
+    }
+    .input_box {
+      display: flex;
+      width: 100%;
+      .input_box_input {
+        display: flex;
+        width: 100%;
+      }
+    }
+  }
+}
+input {
+  width: 100%;
+  margin-right: 5px;
+  height: 36px;
+  border: 1px solid #e0e0e0;
+  color: #9191a0;
+  text-align: center;
+  font-size: 12px;
+}
+.input_contain {
+  button {
+    @include btn;
+    margin-top: 60px;
+  }
+}
+</style>
